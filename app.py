@@ -16,10 +16,10 @@ app.add_middleware(
 )
 
 ## MySQL Database connection details
-DB_HOST = "127.0.0.1"
-DB_USER = "root"
-DB_PASSWORD = "aditya"
-DB_NAME = "FastAPI"
+DB_HOST = "YOUR_HOST"
+DB_USER = "USER_NAME"
+DB_PASSWORD = "PASSWORD"
+DB_NAME = "DB_NAME"
 
 class QueryRequest(BaseModel):
     query:str
