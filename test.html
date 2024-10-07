@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Query Runner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        #query {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        pre, table {
+            width: 100%;
+            overflow: auto;
+        }
+
+        #result {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>SQL Query Runner</h2>
+        <textarea id="query" placeholder="Enter your query here..."></textarea><br>
+        <button onclick="runQuery()">Run Query</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function runQuery() {
+            const query = document.getElementById("query").value;
+            const responseElement = document.getElementById("result");
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/run_query/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    responseElement.textContent = `Error: ${data.detail}`;
+                    responseElement.style.color = 'red';
+                    return;
+                }
+                
+                if (data.columns) {
+                    let resultHtml = `<table><tr>`;
+                    data.columns.forEach(column => resultHtml += `<th>${column}</th>`);
+                    resultHtml += `</tr>`;
+
+                    data.rows.forEach(row => {
+                        resultHtml += `<tr>`;
+                        row.forEach(cell => resultHtml += `<td>${cell}</td>`);
+                        resultHtml += `</tr>`;
+                    });
+
+                    resultHtml += `</table>`;
+                    responseElement.innerHTML = resultHtml;
+                    responseElement.style.color = 'black';
+                } else {
+                    responseElement.textContent = data.message;
+                    responseElement.style.color = 'green';
+                }
+            } catch (error) {
+                responseElement.textContent = `Error: ${error}`;
+                responseElement.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
