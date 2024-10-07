@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-## MySQL Database connection details
+## MySQL Database connection details --> This is just for the demo purpose, it is good practice to store these information as a seperate environment variables
 DB_HOST = "YOUR_HOST"
 DB_USER = "USER_NAME"
 DB_PASSWORD = "PASSWORD"
