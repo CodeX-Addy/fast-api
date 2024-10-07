@@ -34,5 +34,16 @@ This project provides a simple SQL query runner, allowing users to interact with
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/fast-api.git
+git clone https://github.com/CodeX-Addy/fast-api.git
 cd fast-api
+```
+### 2. Install required packages
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the server
+```bash
+uvicorn app:app --reload
+
+```
