@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 import mysql.connector
+from pydantic import BaseModel
 from mysql.connector import Error
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 ## Creating fastapi app
