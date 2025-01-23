@@ -1,6 +1,6 @@
 # SQL Query Runner (Backend:FastAPI)
 
-A simple web-based application to execute SQL queries on a MySQL database. The app has a FastAPI backend and a JavaScript-based frontend, allowing users to input and run SQL queries directly from the frontend interface.
+A basic web-based application to execute SQL queries on a MySQL database. The app has a FastAPI backend and a JavaScript-based frontend, allowing users to input and run SQL queries directly from the frontend interface.
 
 ## Table of Contents
 - [Overview](#overview)
