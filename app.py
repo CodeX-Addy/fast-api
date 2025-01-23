@@ -48,7 +48,7 @@ def execute_query(query: str):
             cursor.close()
             connection.close()
 
-##End point for the query
+## End point for the query
 @app.post("/run_query/")
 async def run_query(request: QueryRequest):
     response = execute_query(request.query)
