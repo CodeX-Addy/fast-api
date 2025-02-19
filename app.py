@@ -21,6 +21,7 @@ DB_USER = "USER_NAME"
 DB_PASSWORD = "PASSWORD"
 DB_NAME = "DB_NAME"
 
+## Base model for query request
 class QueryRequest(BaseModel):
     query:str
 
