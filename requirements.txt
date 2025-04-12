@@ -1,5 +1,7 @@
 fastapi
 uvicorn
 python-dotenv
+sqlalchemy
+psycopg2-binary
 mysql-connector-python
 
