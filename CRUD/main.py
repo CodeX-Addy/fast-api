@@ -45,3 +45,40 @@ def get_db():
         db.close()
 
 ## ----------------CRUD ROUTES Endpoints------------------------
+
+## Create Name
+@app.post("/names/", response_model=NameResponse)
+def create_name(name_in: NameCreate, db: Session = Depends(get_db)):
+    db_name = db.query(NameModel).filter(NameModel.name == name_in.name).first()
+    if db_name:
+        raise HTTPException(status_code=400, detail="Name already exists")
+    new_name = NameModel(name=name_in.name)
+    db.add(new_name)
+    db.commit()
+    db.refresh(new_name)
+    return new_name
+
+@app.get("/names/", response_model=list[NameResponse])
+def get_all_names(db: Session = Depends(get_db)):
+    return db.query(NameModel).all()
+
+# Update Name
+@app.put("/names/{name_id}", response_model=NameResponse)
+def update_name(name_id: int, name_in: NameCreate, db: Session = Depends(get_db)):
+    db_name = db.query(NameModel).filter(NameModel.id == name_id).first()
+    if not db_name:
+        raise HTTPException(status_code=404, detail="Name not found")
+    db_name.name = name_in.name
+    db.commit()
+    db.refresh(db_name)
+    return db_name
+
+# Delete Name
+@app.delete("/names/{name_id}")
+def delete_name(name_id: int, db: Session = Depends(get_db)):
+    db_name = db.query(NameModel).filter(NameModel.id == name_id).first()
+    if not db_name:
+        raise HTTPException(status_code=404, detail="Name not found")
+    db.delete(db_name)
+    db.commit()
+    return {"detail": "Name deleted successfully"}
