@@ -58,11 +58,12 @@ def create_name(name_in: NameCreate, db: Session = Depends(get_db)):
     db.refresh(new_name)
     return new_name
 
+## Get All Names
 @app.get("/names/", response_model=list[NameResponse])
 def get_all_names(db: Session = Depends(get_db)):
     return db.query(NameModel).all()
 
-# Update Name
+## Update Name
 @app.put("/names/{name_id}", response_model=NameResponse)
 def update_name(name_id: int, name_in: NameCreate, db: Session = Depends(get_db)):
     db_name = db.query(NameModel).filter(NameModel.id == name_id).first()
@@ -73,7 +74,7 @@ def update_name(name_id: int, name_in: NameCreate, db: Session = Depends(get_db)
     db.refresh(db_name)
     return db_name
 
-# Delete Name
+## Delete Name
 @app.delete("/names/{name_id}")
 def delete_name(name_id: int, db: Session = Depends(get_db)):
     db_name = db.query(NameModel).filter(NameModel.id == name_id).first()
@@ -82,3 +83,7 @@ def delete_name(name_id: int, db: Session = Depends(get_db)):
     db.delete(db_name)
     db.commit()
     return {"detail": "Name deleted successfully"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
