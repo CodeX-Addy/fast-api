@@ -1,5 +1,3 @@
-## Imports for FastAPI
-
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Depends
