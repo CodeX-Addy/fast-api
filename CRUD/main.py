@@ -44,7 +44,7 @@ def get_db():
     finally:
         db.close()
 
-## ----------------CRUD ROUTES Endpoints------------------------
+## ----------------CRUD Routes Endpoints------------------------
 
 ## Create Name
 @app.post("/names/", response_model=NameResponse)
