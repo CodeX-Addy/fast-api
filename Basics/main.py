@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
+from fastapi import Request
 
 app = FastAPI(
     title="Swiggy Order Service",
@@ -25,4 +26,15 @@ def about_service():
         "service": "order-service",
         "region": "ap-south-1",
         "version": "1.2.1"
+    }
+
+@app.get("/debug/request")
+async def debug_request(request: Request):
+    """Debugging the request parameters"""
+    return {
+        "method": request.method,
+        "request_url": str(request.url),
+        "request_headers": dict(request.headers),
+        "path_params": dict(request.path_params),
+        "query_params": dict(request.query_params),
     }
