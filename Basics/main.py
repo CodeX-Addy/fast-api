@@ -38,3 +38,18 @@ async def debug_request(request: Request):
         "path_params": dict(request.path_params),
         "query_params": dict(request.query_params),
     }
+
+@app.get("/orders/active",
+    summary="Get Active Orders",
+    description="Returns all the orders which are currently being prepared",
+    tags=["orders"],
+    response_description="List all the active orders",
+    deprecated=False,
+)
+def active_orders():
+    """This docstring will also appears in docs"""
+    return {
+        "active_orders": [
+            {"id": 1, "item": "HotDog", "status": "out_for_delivery"}
+        ]
+    }
